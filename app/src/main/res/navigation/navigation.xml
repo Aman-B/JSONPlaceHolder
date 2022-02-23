@@ -10,6 +10,16 @@
         android:id="@+id/userListFragment"
         android:name="com.example.jsonplaceholder.UserListFragment"
         android:label="fragment_user_list"
-        tools:layout="@layout/fragment_user_list" />
+        tools:layout="@layout/fragment_user_list" >
+        <action
+            android:id="@+id/action_userListFragment_to_userPostDetailsFragment"
+            app:destination="@id/userPostDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userPostDetailsFragment"
+        android:name="com.example.jsonplaceholder.UserPostDetailsFragment"
+        android:label="fragment_user_post_details"
+        tools:layout="@layout/fragment_user_post_details" />
 
 </navigation>
