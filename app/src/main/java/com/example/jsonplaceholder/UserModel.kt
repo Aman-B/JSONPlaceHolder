@@ -9,6 +9,6 @@ data class UserModel(
     @field:Json(name = "email") val email: String,
     @field:Json(name = "phone") val phone: String,
     @field:Json(name = "website") val website: String
-    )
+)
 
 

@@ -16,15 +16,10 @@ import androidx.navigation.fragment.findNavController
 
 
 class UserListFragment : Fragment() {
-    private lateinit var arrayAdapter: ArrayAdapter<String>
+    private lateinit var userListAdapter: ArrayAdapter<String>
     private lateinit var mListView: ListView
     private var userNameList: ArrayList<String> = ArrayList()
     private lateinit var userModelList: List<UserModel>
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     private lateinit var viewModel: UserListViewModel
 
     override fun onCreateView(
@@ -69,11 +64,11 @@ class UserListFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        arrayAdapter = ArrayAdapter(
+        userListAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1, userNameList
         )
-        mListView.adapter = arrayAdapter
+        mListView.adapter = userListAdapter
     }
 
     private fun updateUserListView(userList: List<UserModel>) {
@@ -82,7 +77,7 @@ class UserListFragment : Fragment() {
         userNameList.clear()
         userNameList.addAll(userList.map { userModel: UserModel -> userModel.username }
             .toTypedArray())
-        arrayAdapter.notifyDataSetChanged()
+        userListAdapter.notifyDataSetChanged()
 
     }
 }

@@ -27,7 +27,6 @@ class UserPostDetailsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var postDetailsAdapter: PostDetailsAdapter
     private lateinit var userDetailsView: TextView
-    private lateinit var postDetailsView: TextView
 
     // TODO: Rename and change types of parameters
     private var id: Int? = null
@@ -81,13 +80,13 @@ class UserPostDetailsFragment : Fragment() {
 
     private fun setUserDetails() {
         val stringBuilder = StringBuilder()
-        stringBuilder.append(" id ").append(id)
-        stringBuilder.append(" name ").append(name)
-        stringBuilder.append(" username ").append(userName)
-        stringBuilder.append("phone ").append(phone)
-        stringBuilder.append(" email").append(email)
-        stringBuilder.append(" website ").append(website)
-        userDetailsView.setText(stringBuilder)
+        stringBuilder.append(" id : ").append(id).append("\n")
+        stringBuilder.append(" name : ").append(name).append("\n")
+        stringBuilder.append(" username : ").append(userName).append("\n")
+        stringBuilder.append(" phone : ").append(phone).append("\n")
+        stringBuilder.append(" email : ").append(email).append("\n")
+        stringBuilder.append(" website : ").append(website)
+        userDetailsView.text = stringBuilder
     }
 
     private fun updatePostDetailsAdapter(postList: List<PostModel>?) {

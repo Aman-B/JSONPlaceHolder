@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 class PostDetailsAdapter(private var postDetailsList: List<PostModel>) :
     RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var userIDTextView: TextView
         var postIDTextView: TextView
@@ -31,10 +30,14 @@ class PostDetailsAdapter(private var postDetailsList: List<PostModel>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.userIDTextView.setText(postDetailsList[position].userId.toString())
-        holder.postIDTextView.setText(postDetailsList[position].id)
-        holder.titleTextView.setText(postDetailsList[position].title)
-        holder.bodyTextView.setText(postDetailsList[position].body)
+        val userIDText = "UserID : " + postDetailsList[position].userId.toString()
+        val postIDText = "PostID : " + postDetailsList[position].id.toString()
+        val postTitleText = "Title : " + postDetailsList[position].title
+        val postBodyText = "Body : " + postDetailsList[position].body
+        holder.userIDTextView.text = userIDText
+        holder.postIDTextView.text = postIDText
+        holder.titleTextView.text = postTitleText
+        holder.bodyTextView.text = postBodyText
     }
 
     override fun getItemCount(): Int {
