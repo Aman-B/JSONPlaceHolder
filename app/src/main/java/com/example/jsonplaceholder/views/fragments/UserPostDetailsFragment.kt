@@ -45,7 +45,7 @@ class UserPostDetailsFragment : Fragment() {
         userDetailsView = rootView.findViewById(R.id.userDetailsView)
         recyclerView = rootView.findViewById(R.id.postDetailsRecyclerView)
         userPostDetailsViewModel = UserPostDetailsViewModel(userModel.id)
-        userPostDetailsViewModel.postList.observe(
+        userPostDetailsViewModel.getPostsForUserIDFromRepository().observe(
             viewLifecycleOwner,
             { postList -> updatePostDetailsAdapter(postList) })
         //set some dummy post details to show while the posts load.
@@ -87,6 +87,8 @@ class UserPostDetailsFragment : Fragment() {
         if (postList != null) {
             postDetailsList.toMutableList().addAll(postList)
             postDetailsAdapter.updatePostDetailsList(postList)
+        } else {
+            Log.e(LOGTAG, "PostList returned from remote source is null.")
         }
     }
 }

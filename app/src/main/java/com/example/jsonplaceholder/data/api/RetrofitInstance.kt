@@ -8,7 +8,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
     private var retroFit: Retrofit? = null
-
     fun getInstance(): Retrofit? {
         if (retroFit == null) {
             val moshi = Moshi.Builder()

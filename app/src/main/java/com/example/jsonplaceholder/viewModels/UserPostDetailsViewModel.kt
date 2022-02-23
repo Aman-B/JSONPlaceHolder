@@ -1,13 +1,21 @@
 package com.example.jsonplaceholder.viewModels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jsonplaceholder.data.models.PostModel
 import com.example.jsonplaceholder.data.repositories.UserRepository
 
-class UserPostDetailsViewModel constructor(userId: Int) : ViewModel() {
+class UserPostDetailsViewModel constructor(userID: Int) : ViewModel() {
 
     private val userRepository = UserRepository.getInstance()
+    var postList: MutableLiveData<List<PostModel>> = MutableLiveData<List<PostModel>>()
 
-    val postList: MutableLiveData<List<PostModel>> = userRepository.getPostsByUserID(userId)
+    fun getPostsForUserIDFromRepository(): LiveData<List<PostModel>> {
+        return postList
+    }
+
+    init {
+        postList = userRepository.getPostsByUserID(userID)
+    }
 }
