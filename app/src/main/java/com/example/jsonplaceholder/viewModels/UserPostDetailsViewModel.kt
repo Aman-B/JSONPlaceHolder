@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jsonplaceholder.data.models.PostModel
 import com.example.jsonplaceholder.data.repositories.UserRepository
-
+/**
+ * View model for UserPostDetailsFragment
+ */
 class UserPostDetailsViewModel constructor(userID: Int) : ViewModel() {
 
     private val userRepository = UserRepository.getInstance()

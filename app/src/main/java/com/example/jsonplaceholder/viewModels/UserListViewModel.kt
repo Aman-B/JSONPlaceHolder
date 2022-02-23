@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.example.jsonplaceholder.data.models.UserModel
 import com.example.jsonplaceholder.data.repositories.UserRepository
 
+/**
+ * View model for UserListFragment
+ */
 class UserListViewModel : ViewModel() {
     private val userRepository = UserRepository.getInstance()
 
