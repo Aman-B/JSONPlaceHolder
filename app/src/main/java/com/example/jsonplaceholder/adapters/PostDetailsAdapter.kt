@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jsonplaceholder.R
 import com.example.jsonplaceholder.data.models.PostModel
 
+/**
+ * Adapter to show user's post's details in a list.
+ */
 class PostDetailsAdapter(private var postDetailsList: List<PostModel>) :
     RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
 

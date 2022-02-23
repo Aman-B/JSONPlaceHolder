@@ -9,16 +9,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jsonplaceholder.*
+import com.example.jsonplaceholder.R
 import com.example.jsonplaceholder.adapters.PostDetailsAdapter
 import com.example.jsonplaceholder.data.models.PostModel
 import com.example.jsonplaceholder.data.models.UserModel
 import com.example.jsonplaceholder.viewModels.UserPostDetailsViewModel
 
 /**
- * A simple [Fragment] subclass.
- * Use the [UserPostDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Shows user details and user's post details.
  */
 class UserPostDetailsFragment : Fragment() {
     private val LOGTAG: String = "UserPostDetails"
@@ -34,7 +32,7 @@ class UserPostDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             userModel = it.getSerializable("userDetails") as UserModel
-            Log.i(LOGTAG, " usermodel $userModel")
+            Log.i(LOGTAG, " userModel $userModel")
         }
     }
 

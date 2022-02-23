@@ -16,7 +16,9 @@ import com.example.jsonplaceholder.R
 import com.example.jsonplaceholder.data.models.UserModel
 import com.example.jsonplaceholder.viewModels.UserListViewModel
 
-
+/**
+ * Shows user's names list fetched from remote source.
+ */
 class UserListFragment : Fragment() {
     private val LOGTAG: String = "UserList"
     private lateinit var userListAdapter: ArrayAdapter<String>
@@ -46,7 +48,7 @@ class UserListFragment : Fragment() {
     }
 
     /**
-     * Sets list item clicklistener for items in our userListView.
+     * Sets list item click listener for items in our userListView.
      * On click, open and show the respective user's details and posts' details by them.
      */
     private fun setListViewItemClickListener() {

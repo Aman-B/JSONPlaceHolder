@@ -1,13 +1,13 @@
 package com.example.jsonplaceholder.data.api
 
-import com.example.jsonplaceholder.BASE_URL
+import com.example.jsonplaceholder.utils.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
-    var retroFit: Retrofit? = null
+    private var retroFit: Retrofit? = null
 
     fun getInstance(): Retrofit? {
         if (retroFit == null) {

@@ -7,7 +7,7 @@ import com.example.jsonplaceholder.data.repositories.UserRepository
 
 class UserPostDetailsViewModel constructor(userId: Int) : ViewModel() {
 
-    private val userRespository = UserRepository.getInstance()
+    private val userRepository = UserRepository.getInstance()
 
-    val postList: MutableLiveData<List<PostModel>> = userRespository.getPostsByUserID(userId)
+    val postList: MutableLiveData<List<PostModel>> = userRepository.getPostsByUserID(userId)
 }

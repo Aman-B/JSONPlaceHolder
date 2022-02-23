@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.UserPostDetailsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/userDetailsView"
         android:layout_width="match_parent"
