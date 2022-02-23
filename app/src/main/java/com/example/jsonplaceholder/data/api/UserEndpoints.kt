@@ -1,5 +1,7 @@
-package com.example.jsonplaceholder
+package com.example.jsonplaceholder.data.api
 
+import com.example.jsonplaceholder.data.model.PostModel
+import com.example.jsonplaceholder.data.model.UserModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

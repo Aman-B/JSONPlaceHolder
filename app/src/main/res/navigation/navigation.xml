@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/userListFragment"
-        android:name="com.example.jsonplaceholder.UserListFragment"
+        android:name="com.example.jsonplaceholder.views.fragments.UserListFragment"
         android:label="fragment_user_list"
         tools:layout="@layout/fragment_user_list">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/userPostDetailsFragment"
-        android:name="com.example.jsonplaceholder.UserPostDetailsFragment"
+        android:name="com.example.jsonplaceholder.views.fragments.UserPostDetailsFragment"
         android:label="fragment_user_post_details"
         tools:layout="@layout/fragment_user_post_details" />
 

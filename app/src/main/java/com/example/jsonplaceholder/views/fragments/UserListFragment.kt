@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder
+package com.example.jsonplaceholder.views.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -13,14 +13,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.jsonplaceholder.R
+import com.example.jsonplaceholder.data.model.UserModel
+import com.example.jsonplaceholder.viewModels.UserListViewModel
 
 
 class UserListFragment : Fragment() {
+    private val LOGTAG: String = "UserList"
     private lateinit var userListAdapter: ArrayAdapter<String>
-    private lateinit var mListView: ListView
+    private lateinit var userListView: ListView
     private var userNameList: ArrayList<String> = ArrayList()
     private lateinit var userModelList: List<UserModel>
     private lateinit var viewModel: UserListViewModel
+    private var dummyUserModel: UserModel = UserModel()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +35,9 @@ class UserListFragment : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_user_list, container, false)
         viewModel = ViewModelProvider(this).get(UserListViewModel::class.java)
-        mListView = rootView.findViewById(R.id.userlist)
+        userListView = rootView.findViewById(R.id.userlist)
+        //set dummy data; for the user to see
+        userNameList.add(dummyUserModel.name)
         setAdapter()
         setListViewItemClickListener()
         viewModel.userList.observe(
@@ -39,26 +47,19 @@ class UserListFragment : Fragment() {
     }
 
     private fun setListViewItemClickListener() {
-        mListView.setOnItemClickListener { parent, _, position, _ ->
+        userListView.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position) as String
-            Toast.makeText(requireContext(), "Username : " + selectedItem, Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Username : $selectedItem", Toast.LENGTH_LONG).show()
             val bundle = bundleOf(
-                "id" to userModelList[position].id,
-                "name" to userModelList[position].name,
-                "username" to userModelList[position].username,
-                "email" to userModelList[position].email,
-                "phone" to userModelList[position].phone,
-                "website" to userModelList[position].website
+                "userDetails" to userModelList[position]
             )
             if (findNavController().currentDestination?.id == R.id.userListFragment) {
-                val action =
-                    UserListFragmentDirections.actionUserListFragmentToUserPostDetailsFragment()
                 findNavController().navigate(
                     R.id.action_userListFragment_to_userPostDetailsFragment,
                     bundle
                 )
             } else {
-                Log.i("destination ", " " + findNavController().currentDestination?.id)
+                Log.i(LOGTAG, " destination ${findNavController().currentDestination?.id}")
             }
         }
     }
@@ -68,14 +69,14 @@ class UserListFragment : Fragment() {
             requireContext(),
             android.R.layout.simple_list_item_1, userNameList
         )
-        mListView.adapter = userListAdapter
+        userListView.adapter = userListAdapter
     }
 
     private fun updateUserListView(userList: List<UserModel>) {
         userModelList = userList
-        Log.i("amanTag", " user " + userList)
+        Log.i(LOGTAG, " userList $userList")
         userNameList.clear()
-        userNameList.addAll(userList.map { userModel: UserModel -> userModel.username }
+        userNameList.addAll(userList.map { userModel: UserModel -> userModel.name }
             .toTypedArray())
         userListAdapter.notifyDataSetChanged()
 

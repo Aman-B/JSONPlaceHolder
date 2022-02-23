@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder
+package com.example.jsonplaceholder.data.model
 
 import com.squareup.moshi.Json
 

@@ -1,26 +1,21 @@
-package com.example.jsonplaceholder
+package com.example.jsonplaceholder.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jsonplaceholder.R
+import com.example.jsonplaceholder.data.model.PostModel
 
 class PostDetailsAdapter(private var postDetailsList: List<PostModel>) :
     RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var userIDTextView: TextView
-        var postIDTextView: TextView
-        var titleTextView: TextView
-        var bodyTextView: TextView
-
-        init {
-            userIDTextView = view.findViewById(R.id.userID)
-            postIDTextView = view.findViewById(R.id.postID)
-            titleTextView = view.findViewById(R.id.title)
-            bodyTextView = view.findViewById(R.id.body)
-        }
+        var userIDTextView: TextView = view.findViewById(R.id.userID)
+        var postIDTextView: TextView = view.findViewById(R.id.postID)
+        var titleTextView: TextView = view.findViewById(R.id.title)
+        var bodyTextView: TextView = view.findViewById(R.id.body)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
