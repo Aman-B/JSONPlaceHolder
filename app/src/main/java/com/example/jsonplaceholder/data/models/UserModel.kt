@@ -3,6 +3,9 @@ package com.example.jsonplaceholder.data.models
 import com.squareup.moshi.Json
 import java.io.Serializable
 
+/**
+ * Data class for defining the user model.
+ */
 data class UserModel(
     @field:Json(name = "id") val id: Int = 0,
     @field:Json(name = "name") val name: String = "dummy Name",

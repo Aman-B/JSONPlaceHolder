@@ -12,7 +12,7 @@ class UserPostDetailsViewModel constructor(userID: Int) : ViewModel() {
 
     private val userRepository = UserRepository.getInstance()
     var postList: MutableLiveData<List<PostModel>> = MutableLiveData<List<PostModel>>()
-
+    //get user's posts from repository.
     fun getPostsForUserIDFromRepository(): LiveData<List<PostModel>> {
         return postList
     }

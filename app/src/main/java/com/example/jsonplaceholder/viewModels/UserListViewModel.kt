@@ -11,10 +11,9 @@ import com.example.jsonplaceholder.data.repositories.UserRepository
  */
 class UserListViewModel : ViewModel() {
     private val userRepository = UserRepository.getInstance()
-
-    //get Users from JSONPlaceHolder remote source.
     var userList: MutableLiveData<List<UserModel>> = MutableLiveData<List<UserModel>>()
 
+    //get Users from repository.
     fun getUsersFromReposistory(): LiveData<List<UserModel>> {
         return userList
     }
