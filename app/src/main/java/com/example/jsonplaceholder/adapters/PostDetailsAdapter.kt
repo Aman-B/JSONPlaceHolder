@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jsonplaceholder.R
-import com.example.jsonplaceholder.data.model.PostModel
+import com.example.jsonplaceholder.data.models.PostModel
 
 class PostDetailsAdapter(private var postDetailsList: List<PostModel>) :
     RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {

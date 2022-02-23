@@ -1,4 +1,4 @@
-package com.example.jsonplaceholder.data.model
+package com.example.jsonplaceholder.data.models
 
 import com.squareup.moshi.Json
 import java.io.Serializable

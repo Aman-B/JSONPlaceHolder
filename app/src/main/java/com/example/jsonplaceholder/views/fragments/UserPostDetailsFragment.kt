@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jsonplaceholder.*
 import com.example.jsonplaceholder.adapters.PostDetailsAdapter
-import com.example.jsonplaceholder.data.model.PostModel
-import com.example.jsonplaceholder.data.model.UserModel
+import com.example.jsonplaceholder.data.models.PostModel
+import com.example.jsonplaceholder.data.models.UserModel
 import com.example.jsonplaceholder.viewModels.UserPostDetailsViewModel
 
 /**
@@ -25,7 +25,7 @@ class UserPostDetailsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var postDetailsAdapter: PostDetailsAdapter
     private lateinit var userDetailsView: TextView
-    private lateinit var viewModel: UserPostDetailsViewModel
+    private lateinit var userPostDetailsViewModel: UserPostDetailsViewModel
     private lateinit var postDetailsList: List<PostModel>
     private var dummyPostModel: PostModel = PostModel()
 
@@ -44,21 +44,32 @@ class UserPostDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_user_post_details, container, false)
-        postDetailsList = mutableListOf(dummyPostModel)
-        viewModel = UserPostDetailsViewModel(userModel.id)
         userDetailsView = rootView.findViewById(R.id.userDetailsView)
         recyclerView = rootView.findViewById(R.id.postDetailsRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        postDetailsAdapter = PostDetailsAdapter(postDetailsList)
-        recyclerView.adapter = postDetailsAdapter
-        setUserDetails()
-        viewModel.postList.observe(
+        userPostDetailsViewModel = UserPostDetailsViewModel(userModel.id)
+        userPostDetailsViewModel.postList.observe(
             viewLifecycleOwner,
             { postList -> updatePostDetailsAdapter(postList) })
+        //set some dummy post details to show while the posts load.
+        postDetailsList = mutableListOf(dummyPostModel)
+        setPostDetailsRecyclerView()
+        setUserDetails()
 
         return rootView
     }
 
+    /**
+     * Sets up recyclerView with adapter.
+     */
+    private fun setPostDetailsRecyclerView() {
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        postDetailsAdapter = PostDetailsAdapter(postDetailsList)
+        recyclerView.adapter = postDetailsAdapter
+    }
+
+    /**
+     * Sets user details in userDetailsView; using the values in userModel
+     */
     private fun setUserDetails() {
         val stringBuilder = StringBuilder()
         stringBuilder.append(" id : ").append(userModel.id).append("\n")
@@ -70,6 +81,10 @@ class UserPostDetailsFragment : Fragment() {
         userDetailsView.text = stringBuilder
     }
 
+    /**
+     * Updates the postDetailsAdapter with postList returned by the remote source.
+     * @param postList
+     */
     private fun updatePostDetailsAdapter(postList: List<PostModel>?) {
         if (postList != null) {
             postDetailsList.toMutableList().addAll(postList)

@@ -2,7 +2,7 @@ package com.example.jsonplaceholder.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.jsonplaceholder.data.model.PostModel
+import com.example.jsonplaceholder.data.models.PostModel
 import com.example.jsonplaceholder.data.repositories.UserRepository
 
 class UserPostDetailsViewModel constructor(userId: Int) : ViewModel() {
