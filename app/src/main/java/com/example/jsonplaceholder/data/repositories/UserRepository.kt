@@ -9,13 +9,17 @@ import com.example.jsonplaceholder.data.models.UserModel
 import retrofit2.Call
 import retrofit2.Response
 
+/**
+ * A repository class which requests data from remote data source and returns results.
+ */
 class UserRepository {
     private val LOGTAG: String = "UserRepository"
     private val retroFitInstance = RetrofitInstance.getInstance()?.create(UserEndpoints::class.java)
 
     /**
      * Gets the list of users from remote source : JSONPlaceholder.
-     *
+     *@return userList : A mutableliveData<List<UserModel>> which contains the list of users
+     * received from remote source.
      */
     fun getUsersFromJSONPlaceHolder(): MutableLiveData<List<UserModel>> {
         val userList: MutableLiveData<List<UserModel>> = MutableLiveData()
@@ -25,7 +29,7 @@ class UserRepository {
                 call: Call<List<UserModel>>,
                 response: Response<List<UserModel>>
             ) {
-                Log.i(LOGTAG, "" + response.body())
+                Log.i(LOGTAG, "response : " + response.body())
                 userList.value = response.body()
             }
 
@@ -37,9 +41,14 @@ class UserRepository {
         return userList
     }
 
-    fun getPostsByUserID(userId: Int): MutableLiveData<List<PostModel>> {
+    /**
+     * Gets the list of posts for a specific user by using their userID.
+     * @param userID : userId of the User
+     * @return postList : List of user's posts with post details received from remote source.
+     */
+    fun getPostsByUserID(userID: Int): MutableLiveData<List<PostModel>> {
         val postList: MutableLiveData<List<PostModel>> = MutableLiveData()
-        retroFitInstance?.getPostsByUserId(userId = userId)?.enqueue(object :
+        retroFitInstance?.getPostsByUserId(userId = userID)?.enqueue(object :
             retrofit2.Callback<List<PostModel>> {
             override fun onResponse(
                 call: Call<List<PostModel>>,
@@ -48,6 +57,7 @@ class UserRepository {
                 Log.i(LOGTAG, "" + response.body())
                 postList.value = response.body()
             }
+
             override fun onFailure(call: Call<List<PostModel>>, t: Throwable) {
                 Log.i(LOGTAG, "retrofit call failed :" + t.localizedMessage)
             }
