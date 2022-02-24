@@ -15,15 +15,15 @@ class PostDetailsAdapter(private var postDetailsList: List<PostModel>) :
     RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var userIDTextView: TextView = view.findViewById(R.id.userID)
-        var postIDTextView: TextView = view.findViewById(R.id.postID)
+        var userIDTextView: TextView = view.findViewById(R.id.user_ID)
+        var postIDTextView: TextView = view.findViewById(R.id.post_ID)
         var titleTextView: TextView = view.findViewById(R.id.title)
         var bodyTextView: TextView = view.findViewById(R.id.body)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.post_details_card_view, parent, false)
+            .inflate(R.layout.post_details_item_view, parent, false)
         return ViewHolder(view)
     }
 

@@ -35,9 +35,9 @@ class UserListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_user_list, container, false)
-        userListView = rootView.findViewById(R.id.userlist)
+        userListView = rootView.findViewById(R.id.user_list)
         viewModel = ViewModelProvider(this).get(UserListViewModel::class.java)
-        viewModel.getUsersFromReposistory().observe(
+        viewModel.getUsersFromRepository().observe(
             viewLifecycleOwner,
             { userList -> updateUserListView(userList) })
         //set dummy data; for the user to see

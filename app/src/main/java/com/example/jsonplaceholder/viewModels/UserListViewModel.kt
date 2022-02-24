@@ -14,7 +14,7 @@ class UserListViewModel : ViewModel() {
     var userList: MutableLiveData<List<UserModel>> = MutableLiveData<List<UserModel>>()
 
     //get Users from repository.
-    fun getUsersFromReposistory(): LiveData<List<UserModel>> {
+    fun getUsersFromRepository(): LiveData<List<UserModel>> {
         return userList
     }
 

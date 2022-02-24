@@ -42,16 +42,16 @@ class UserPostDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_user_post_details, container, false)
-        userDetailsView = rootView.findViewById(R.id.userDetailsView)
-        recyclerView = rootView.findViewById(R.id.postDetailsRecyclerView)
+        userDetailsView = rootView.findViewById(R.id.user_details_view)
+        recyclerView = rootView.findViewById(R.id.post_details_recyclerView)
         userPostDetailsViewModel = UserPostDetailsViewModel(userModel.id)
         userPostDetailsViewModel.getPostsForUserIDFromRepository().observe(
             viewLifecycleOwner,
             { postList -> updatePostDetailsAdapter(postList) })
         //set some dummy post details to show while the posts load.
         postDetailsList = mutableListOf(dummyPostModel)
-        setPostDetailsRecyclerView()
-        setUserDetails()
+        setPostDetailsAdapterForRecyclerView()
+        setUserDetailsInUI()
 
         return rootView
     }
@@ -59,7 +59,7 @@ class UserPostDetailsFragment : Fragment() {
     /**
      * Sets up recyclerView with adapter.
      */
-    private fun setPostDetailsRecyclerView() {
+    private fun setPostDetailsAdapterForRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         postDetailsAdapter = PostDetailsAdapter(postDetailsList)
         recyclerView.adapter = postDetailsAdapter
@@ -68,7 +68,7 @@ class UserPostDetailsFragment : Fragment() {
     /**
      * Sets user details in userDetailsView; using the values in userModel
      */
-    private fun setUserDetails() {
+    private fun setUserDetailsInUI() {
         val stringBuilder = StringBuilder()
         stringBuilder.append(" id : ").append(userModel.id).append("\n")
         stringBuilder.append(" name : ").append(userModel.name).append("\n")

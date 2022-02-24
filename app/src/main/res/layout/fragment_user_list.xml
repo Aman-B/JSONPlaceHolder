@@ -6,7 +6,7 @@
     tools:context=".views.fragments.UserListFragment">
 
     <ListView
-        android:id="@+id/userlist"
+        android:id="@+id/user_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </FrameLayout>

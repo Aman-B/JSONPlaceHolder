@@ -7,7 +7,7 @@
     tools:context=".views.fragments.UserPostDetailsFragment">
 
     <TextView
-        android:id="@+id/userDetailsView"
+        android:id="@+id/user_details_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -22,7 +22,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/postDetailsRecyclerView"
+        android:id="@+id/post_details_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standard_margin"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsView"
+        app:layout_constraintTop_toBottomOf="@+id/user_details_view"
         app:layout_constraintVertical_bias="0.035" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
