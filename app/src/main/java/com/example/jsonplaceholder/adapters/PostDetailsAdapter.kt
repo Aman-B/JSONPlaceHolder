@@ -10,6 +10,7 @@ import com.example.jsonplaceholder.data.models.PostModel
 
 /**
  * Adapter to show user's post's details in a list.
+ * @param postDetailsList : List<PostModel> which is a list of posts' with all the details.
  */
 class PostDetailsAdapter(private var postDetailsList: List<PostModel>) :
     RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
