@@ -1,23 +1,25 @@
 package com.example.jsonplaceholder.viewModels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import com.example.jsonplaceholder.data.api.PostEndpoints
 import com.example.jsonplaceholder.data.models.PostModel
-import com.example.jsonplaceholder.data.repositories.UserRepository
+import com.example.jsonplaceholder.data.repositories.PostRepository
+import kotlinx.coroutines.Dispatchers
+
 /**
  * View model for UserPostDetailsFragment
  */
-class UserPostDetailsViewModel constructor(userID: Int) : ViewModel() {
+class UserPostDetailsViewModel constructor(userID: Int, postEndpoints: PostEndpoints) :
+    ViewModel() {
 
-    private val userRepository = UserRepository.getInstance()
-    var postList: MutableLiveData<List<PostModel>> = MutableLiveData<List<PostModel>>()
-    //get user's posts from repository.
-    fun getPostsForUserIDFromRepository(): LiveData<List<PostModel>> {
-        return postList
+    private val postRepository = PostRepository.getInstance(postEndpoints)
+
+    val getPostList = liveData(Dispatchers.IO) {
+        val postList: LiveData<List<PostModel>>
+        postList = postRepository.getPostsByUserID(userID)
+        emitSource(postList)
     }
 
-    init {
-        postList = userRepository.getPostsByUserID(userID)
-    }
 }

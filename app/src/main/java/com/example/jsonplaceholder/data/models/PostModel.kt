@@ -5,10 +5,10 @@ import com.squareup.moshi.Json
  * Data class for defining the post model.
  */
 data class PostModel(
-    @field:Json(name = "userId") val userId: Int = 0,
-    @field:Json(name = "id") val id: Int = 0,
-    @field:Json(name = "title") val title: String = "dummyTitle",
-    @field:Json(name = "body") val body: String = "dummyBody"
+    @field:Json(name = "userId") val userId: Int,
+    @field:Json(name = "id") val id: Int,
+    @field:Json(name = "title") val title: String,
+    @field:Json(name = "body") val body: String
 )
 
 

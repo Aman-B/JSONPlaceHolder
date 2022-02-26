@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.jsonplaceholder.R
+import com.example.jsonplaceholder.data.api.RetrofitInstance
+import com.example.jsonplaceholder.data.api.UserEndpoints
 import com.example.jsonplaceholder.data.models.UserModel
 import com.example.jsonplaceholder.viewModels.UserListViewModel
 
@@ -20,13 +22,14 @@ import com.example.jsonplaceholder.viewModels.UserListViewModel
  * Shows user's names list fetched from remote source.
  */
 class UserListFragment : Fragment() {
+    private lateinit var progressBar: ProgressBar
     private val LOGTAG: String = "UserList"
     private lateinit var userListAdapter: ArrayAdapter<String>
     private lateinit var userListView: ListView
     private var userNameList: ArrayList<String> = ArrayList()
     private lateinit var userModelList: List<UserModel>
     private lateinit var viewModel: UserListViewModel
-    private var dummyUserModel: UserModel = UserModel()
+    private lateinit var userEndpointInstance: UserEndpoints
 
 
     override fun onCreateView(
@@ -35,15 +38,17 @@ class UserListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_user_list, container, false)
+        progressBar = rootView.findViewById(R.id.progress_bar)
         userListView = rootView.findViewById(R.id.user_list)
-        viewModel = ViewModelProvider(this).get(UserListViewModel::class.java)
-        viewModel.getUsersFromRepository().observe(
+
+        userEndpointInstance = RetrofitInstance.getInstance()?.create(UserEndpoints::class.java)!!
+        viewModel = UserListViewModel(userEndpointInstance)
+        viewModel.getUserList.observe(
             viewLifecycleOwner,
             { userList -> updateUserListView(userList) })
-        //set dummy data; for the user to see
-        userNameList.add(dummyUserModel.name)
         setAdapter()
         setListViewItemClickListener()
+
         return rootView
     }
 
@@ -91,6 +96,7 @@ class UserListFragment : Fragment() {
         userNameList.addAll(userList.map { userModel: UserModel -> userModel.name }
             .toTypedArray())
         userListAdapter.notifyDataSetChanged()
+        progressBar.visibility = View.INVISIBLE
 
     }
 }

@@ -3,22 +3,21 @@ package com.example.jsonplaceholder.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import com.example.jsonplaceholder.data.api.UserEndpoints
 import com.example.jsonplaceholder.data.models.UserModel
 import com.example.jsonplaceholder.data.repositories.UserRepository
+import kotlinx.coroutines.Dispatchers
 
 /**
  * View model for UserListFragment
  */
-class UserListViewModel : ViewModel() {
-    private val userRepository = UserRepository.getInstance()
-    var userList: MutableLiveData<List<UserModel>> = MutableLiveData<List<UserModel>>()
-
-    //get Users from repository.
-    fun getUsersFromRepository(): LiveData<List<UserModel>> {
-        return userList
-    }
-
-    init {
+class UserListViewModel(userEndpointInstance: UserEndpoints) : ViewModel() {
+    private val userRepository = UserRepository.getInstance(userEndpointInstance)
+    var userList: LiveData<List<UserModel>> = MutableLiveData()
+    val getUserList = liveData(Dispatchers.IO) {
         userList = userRepository.getUsersFromJSONPlaceHolder()
+        emitSource(userList)
     }
+
 }

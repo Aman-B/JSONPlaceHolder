@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.UserListFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
     <ListView
         android:id="@+id/user_list"
         android:layout_width="match_parent"

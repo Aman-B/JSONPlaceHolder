@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jsonplaceholder.R
 import com.example.jsonplaceholder.adapters.PostDetailsAdapter
+import com.example.jsonplaceholder.data.api.PostEndpoints
+import com.example.jsonplaceholder.data.api.RetrofitInstance
 import com.example.jsonplaceholder.data.models.PostModel
 import com.example.jsonplaceholder.data.models.UserModel
 import com.example.jsonplaceholder.viewModels.UserPostDetailsViewModel
@@ -19,13 +21,18 @@ import com.example.jsonplaceholder.viewModels.UserPostDetailsViewModel
  * Shows user details and user's post details.
  */
 class UserPostDetailsFragment : Fragment() {
+    private lateinit var postEndpointInstance: PostEndpoints
+    private lateinit var postDetailsAdapter: PostDetailsAdapter
     private val LOGTAG: String = "UserPostDetails"
     private lateinit var recyclerView: RecyclerView
-    private lateinit var postDetailsAdapter: PostDetailsAdapter
-    private lateinit var userDetailsView: TextView
+    private lateinit var userID: TextView
+    private lateinit var name: TextView
+    private lateinit var userName: TextView
+    private lateinit var userPhone: TextView
+    private lateinit var userEmail: TextView
+    private lateinit var userWebsite: TextView
     private lateinit var userPostDetailsViewModel: UserPostDetailsViewModel
-    private lateinit var postDetailsList: List<PostModel>
-    private var dummyPostModel: PostModel = PostModel()
+    private var postDetailsList: ArrayList<PostModel> = ArrayList()
 
     private lateinit var userModel: UserModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,41 +49,43 @@ class UserPostDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_user_post_details, container, false)
-        userDetailsView = rootView.findViewById(R.id.user_details_view)
+
+        userID = rootView.findViewById(R.id.user_id)
+        name = rootView.findViewById(R.id.name)
+        userName = rootView.findViewById(R.id.user_name)
+        userPhone = rootView.findViewById(R.id.user_phone)
+        userEmail = rootView.findViewById(R.id.user_email)
+        userWebsite = rootView.findViewById(R.id.user_website)
+
         recyclerView = rootView.findViewById(R.id.post_details_recyclerView)
-        userPostDetailsViewModel = UserPostDetailsViewModel(userModel.id)
-        userPostDetailsViewModel.getPostsForUserIDFromRepository().observe(
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        postDetailsAdapter = PostDetailsAdapter(postDetailsList)
+        recyclerView.adapter = postDetailsAdapter
+
+        postEndpointInstance = RetrofitInstance.getInstance()?.create(PostEndpoints::class.java)!!
+
+        userPostDetailsViewModel = UserPostDetailsViewModel(userModel.id, postEndpointInstance)
+        userPostDetailsViewModel.getPostList.observe(
             viewLifecycleOwner,
             { postList -> updatePostDetailsAdapter(postList) })
-        //set some dummy post details to show while the posts load.
-        postDetailsList = mutableListOf(dummyPostModel)
-        setPostDetailsAdapterForRecyclerView()
+//        setPostDetailsAdapterForRecyclerView()
         setUserDetailsInUI()
 
         return rootView
     }
 
-    /**
-     * Sets up recyclerView with adapter.
-     */
-    private fun setPostDetailsAdapterForRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        postDetailsAdapter = PostDetailsAdapter(postDetailsList)
-        recyclerView.adapter = postDetailsAdapter
-    }
 
     /**
      * Sets user details in userDetailsView; using the values in userModel
      */
     private fun setUserDetailsInUI() {
-        val stringBuilder = StringBuilder()
-        stringBuilder.append(" id : ").append(userModel.id).append("\n")
-        stringBuilder.append(" name : ").append(userModel.name).append("\n")
-        stringBuilder.append(" username : ").append(userModel.username).append("\n")
-        stringBuilder.append(" phone : ").append(userModel.phone).append("\n")
-        stringBuilder.append(" email : ").append(userModel.email).append("\n")
-        stringBuilder.append(" website : ").append(userModel.website)
-        userDetailsView.text = stringBuilder
+        userID.text = "ID :  ${userModel.id}"
+        name.text = "Name :  ${userModel.name}"
+        userName.text = "Username :  ${userModel.username}"
+        userPhone.text = "Phone No :  ${userModel.phone}"
+        userEmail.text = userModel.email
+        userWebsite.text = userModel.website
+
     }
 
     /**
@@ -85,7 +94,6 @@ class UserPostDetailsFragment : Fragment() {
      */
     private fun updatePostDetailsAdapter(postList: List<PostModel>?) {
         if (postList != null) {
-            postDetailsList.toMutableList().addAll(postList)
             postDetailsAdapter.updatePostDetailsList(postList)
         } else {
             Log.e(LOGTAG, "PostList returned from remote source is null.")

@@ -19,4 +19,4 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.jsonplaceholder", appContext.packageName)
     }
-}
+} //TODO: rename or remove this
