@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jsonplaceholder.R
-import com.example.jsonplaceholder.data.models.PostModel
+import com.example.jsonplaceholder.data.models.Post
 
 /**
  * Adapter to show user's post's details in a list.
  * @param postDetailsList : List<PostModel> which is a list of posts' with all the details.
  */
-class PostDetailsAdapter(private var postDetailsList: ArrayList<PostModel>) :
+class PostDetailsAdapter(private var postDetailsList: ArrayList<Post>) :
     RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -43,7 +43,7 @@ class PostDetailsAdapter(private var postDetailsList: ArrayList<PostModel>) :
         return postDetailsList.size
     }
 
-    fun updatePostDetailsList(postList: List<PostModel>) {
+    fun updatePostDetailsList(postList: List<Post>) {
         postDetailsList.clear()
         postDetailsList.addAll(postList)
         notifyDataSetChanged()

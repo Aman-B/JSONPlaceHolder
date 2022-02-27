@@ -2,4 +2,9 @@
     <string name="app_name">JSONPlaceHolder</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dummyText">Loading…</string>
+    <string name="user_id_text">ID : %s</string>
+    <string name="user_name_text">Name : %s</string>
+    <string name="userName_name_text">Username : %s</string>
+    <string name="user_phone_text">Phone : %s</string>
+    <string name="user_website_text">Website : %s</string>
 </resources>

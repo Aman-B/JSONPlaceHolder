@@ -3,7 +3,7 @@ package com.example.jsonplaceholder.data.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.jsonplaceholder.data.api.PostEndpoints
-import com.example.jsonplaceholder.data.models.PostModel
+import com.example.jsonplaceholder.data.models.Post
 import retrofit2.Call
 import retrofit2.Response
 
@@ -16,19 +16,19 @@ class PostRepository private constructor(private val postEndpoints: PostEndpoint
      * @param userID : userId of the User
      * @return postList : List of user's posts with post details received from remote source.
      */
-    fun getPostsByUserID(userID: Int): MutableLiveData<List<PostModel>> {
-        val postList: MutableLiveData<List<PostModel>> = MutableLiveData()
+    fun getPostsByUserID(userID: Int): MutableLiveData<List<Post>> {
+        val postList: MutableLiveData<List<Post>> = MutableLiveData()
         postEndpoints.getPostsByUserId(userId = userID).enqueue(object :
-            retrofit2.Callback<List<PostModel>> {
+            retrofit2.Callback<List<Post>> {
             override fun onResponse(
-                call: Call<List<PostModel>>,
-                response: Response<List<PostModel>>
+                call: Call<List<Post>>,
+                response: Response<List<Post>>
             ) {
                 Log.i(LOGTAG, "" + response.body())
                 postList.value = response.body()
             }
 
-            override fun onFailure(call: Call<List<PostModel>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
                 Log.i(LOGTAG, "retrofit call failed :" + t.localizedMessage)
             }
         })

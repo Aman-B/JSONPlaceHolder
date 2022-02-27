@@ -3,7 +3,7 @@ package com.example.jsonplaceholder.data.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.jsonplaceholder.data.api.UserEndpoints
-import com.example.jsonplaceholder.data.models.UserModel
+import com.example.jsonplaceholder.data.models.User
 import retrofit2.Call
 import retrofit2.Response
 
@@ -18,19 +18,19 @@ class UserRepository private constructor(private val userEndpoints: UserEndpoint
      *@return userList : A mutableliveData<List<UserModel>> which contains the list of users
      * received from remote source.
      */
-    fun getUsersFromJSONPlaceHolder(): MutableLiveData<List<UserModel>> {
-        val userList: MutableLiveData<List<UserModel>> = MutableLiveData()
+    fun getUsersFromJSONPlaceHolder(): MutableLiveData<List<User>> {
+        val userList: MutableLiveData<List<User>> = MutableLiveData()
         userEndpoints.getUserList().enqueue(object :
-            retrofit2.Callback<List<UserModel>> {
+            retrofit2.Callback<List<User>> {
             override fun onResponse(
-                call: Call<List<UserModel>>,
-                response: Response<List<UserModel>>
+                call: Call<List<User>>,
+                response: Response<List<User>>
             ) {
                 Log.i(LOGTAG, "response : " + response.body())
                 userList.value = response.body()
             }
 
-            override fun onFailure(call: Call<List<UserModel>>, t: Throwable) {
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 Log.i(LOGTAG, "retrofit call failed :" + t.localizedMessage)
                 t.localizedMessage
             }

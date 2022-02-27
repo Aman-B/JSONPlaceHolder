@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.jsonplaceholder.data.api.PostEndpoints
-import com.example.jsonplaceholder.data.models.PostModel
+import com.example.jsonplaceholder.data.models.Post
 import com.example.jsonplaceholder.data.repositories.PostRepository
 import kotlinx.coroutines.Dispatchers
 
@@ -17,7 +17,7 @@ class UserPostDetailsViewModel constructor(userID: Int, postEndpoints: PostEndpo
     private val postRepository = PostRepository.getInstance(postEndpoints)
 
     val getPostList = liveData(Dispatchers.IO) {
-        val postList: LiveData<List<PostModel>>
+        val postList: LiveData<List<Post>>
         postList = postRepository.getPostsByUserID(userID)
         emitSource(postList)
     }

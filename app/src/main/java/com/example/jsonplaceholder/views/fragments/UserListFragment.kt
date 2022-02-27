@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.jsonplaceholder.R
 import com.example.jsonplaceholder.data.api.RetrofitInstance
 import com.example.jsonplaceholder.data.api.UserEndpoints
-import com.example.jsonplaceholder.data.models.UserModel
+import com.example.jsonplaceholder.data.models.User
 import com.example.jsonplaceholder.viewModels.UserListViewModel
 
 /**
@@ -27,9 +27,9 @@ class UserListFragment : Fragment() {
     private lateinit var userListAdapter: ArrayAdapter<String>
     private lateinit var userListView: ListView
     private var userNameList: ArrayList<String> = ArrayList()
-    private lateinit var userModelList: List<UserModel>
-    private lateinit var viewModel: UserListViewModel
-    private lateinit var userEndpointInstance: UserEndpoints
+    private var userList: List<User> = ArrayList<User>()
+    private lateinit var userListViewModel: UserListViewModel
+    private var userEndpointInstance: UserEndpoints? = null
 
 
     override fun onCreateView(
@@ -41,15 +41,36 @@ class UserListFragment : Fragment() {
         progressBar = rootView.findViewById(R.id.progress_bar)
         userListView = rootView.findViewById(R.id.user_list)
 
-        userEndpointInstance = RetrofitInstance.getInstance()?.create(UserEndpoints::class.java)!!
-        viewModel = UserListViewModel(userEndpointInstance)
-        viewModel.getUserList.observe(
-            viewLifecycleOwner,
-            { userList -> updateUserListView(userList) })
+        userEndpointInstance = RetrofitInstance.getInstance()?.create(UserEndpoints::class.java)
+        if (userEndpointInstance != null) {
+            //Do not set the userList is again, if it is already set.
+            if (userList.isNullOrEmpty()) {
+                userListViewModel = UserListViewModel(userEndpointInstance!!)
+                userListViewModel.getUserList.observe(
+                    viewLifecycleOwner,
+                    { userList -> updateUI(userList) })
+            } else {
+                Log.i(LOGTAG, "UserList is already set.")
+                progressBar.visibility = View.INVISIBLE
+            }
+
+        } else {
+            Log.e(LOGTAG, "UserEndpoint not created successfully.")
+        }
+
         setAdapter()
         setListViewItemClickListener()
 
         return rootView
+    }
+
+    /**
+     * Updates the UI with userList and hides progressbar
+     * @param userList
+     */
+    private fun updateUI(userList: List<User>) {
+        updateUserListView(userList)
+        progressBar.visibility = View.INVISIBLE
     }
 
     /**
@@ -61,7 +82,7 @@ class UserListFragment : Fragment() {
             val selectedItem = parent.getItemAtPosition(position) as String
             Toast.makeText(requireContext(), "Username : $selectedItem", Toast.LENGTH_SHORT).show()
             val bundle = bundleOf(
-                "userDetails" to userModelList[position]
+                "userDetails" to userList[position]
             )
             if (findNavController().currentDestination?.id == R.id.userListFragment) {
                 findNavController().navigate(
@@ -89,14 +110,11 @@ class UserListFragment : Fragment() {
      * Updates the userListView with list of posts that are returned by remote source.
      * @param userList
      */
-    private fun updateUserListView(userList: List<UserModel>) {
-        userModelList = userList
+    fun updateUserListView(userList: List<User>) {
+        this.userList = userList
         Log.i(LOGTAG, " userList $userList")
-        userNameList.clear()
-        userNameList.addAll(userList.map { userModel: UserModel -> userModel.name }
+        userNameList.addAll(userList.map { user: User -> user.name }
             .toTypedArray())
         userListAdapter.notifyDataSetChanged()
-        progressBar.visibility = View.INVISIBLE
-
     }
 }
