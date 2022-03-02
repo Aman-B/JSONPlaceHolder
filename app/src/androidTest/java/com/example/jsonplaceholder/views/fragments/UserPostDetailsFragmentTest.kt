@@ -62,7 +62,6 @@ class UserPostDetailsFragmentTest {
         val postDetailsRecyclerView = onView(ViewMatchers.withId(R.id.post_details_recyclerView))
         postDetailsRecyclerView.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 
-        //TODO : checking displayed
         onView(ViewMatchers.withText("PostID : 12"))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 

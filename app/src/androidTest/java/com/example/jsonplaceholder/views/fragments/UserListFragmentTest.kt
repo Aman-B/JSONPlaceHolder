@@ -1,5 +1,8 @@
 package com.example.jsonplaceholder.views.fragments
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
@@ -11,6 +14,7 @@ import androidx.test.filters.LargeTest
 import com.example.jsonplaceholder.R
 import com.example.jsonplaceholder.utils.EspressoIdlingResource
 import com.example.jsonplaceholder.views.activities.MainActivity
+import org.hamcrest.core.IsAnything.anything
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -25,7 +29,7 @@ class UserListFragmentTest {
     @get:Rule
     var scenario: ActivityScenarioRule<MainActivity> =
         ActivityScenarioRule(MainActivity::class.java)
-
+    val targetContext: Context = ApplicationProvider.getApplicationContext()
 
     //register idling resource so espresso knows that there is a long running task in background.
     @Before
@@ -51,10 +55,17 @@ class UserListFragmentTest {
     fun userListItem_isClickValid() {
         val userListView = onView(withId(R.id.user_list))
         userListView.check(matches(isDisplayed()))
-        //TODO : Replace with ID. Remove hardcoded text
-        onView((withText("Leanne Graham"))).check(matches(isDisplayed())).perform(click())
-
-        //TODO : Check for the next fragment; check with textview with id of the next screen.
+        onData(anything()).inAdapterView(withId(R.id.user_list)).atPosition(0).perform(click())
+        onView((withId(R.id.name))).check(
+            matches(
+                withText(
+                    targetContext.getString(
+                        R.string.user_name_text,
+                        "Leanne Graham"
+                    )
+                )
+            )
+        )
     }
 
 }
