@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.jsonplaceholder.data.api.PostEndpoints
 import com.example.jsonplaceholder.data.models.Post
+import com.example.jsonplaceholder.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Response
 
@@ -16,8 +17,10 @@ class PostRepository private constructor(private val postEndpoints: PostEndpoint
      * @param userID : userId of the User
      * @return postList : List of user's posts with post details received from remote source.
      */
+    //TODO : generate test cases for repository
     fun getPostsByUserID(userID: Int): MutableLiveData<List<Post>> {
         val postList: MutableLiveData<List<Post>> = MutableLiveData()
+        EspressoIdlingResource.increment()
         postEndpoints.getPostsByUserId(userId = userID).enqueue(object :
             retrofit2.Callback<List<Post>> {
             override fun onResponse(
@@ -26,10 +29,12 @@ class PostRepository private constructor(private val postEndpoints: PostEndpoint
             ) {
                 Log.i(LOGTAG, "" + response.body())
                 postList.value = response.body()
+                EspressoIdlingResource.decrement()
             }
 
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
                 Log.i(LOGTAG, "retrofit call failed :" + t.localizedMessage)
+                EspressoIdlingResource.decrement()
             }
         })
         return postList

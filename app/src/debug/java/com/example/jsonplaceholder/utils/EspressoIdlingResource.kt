@@ -3,7 +3,8 @@ package com.example.jsonplaceholder.utils
 import androidx.test.espresso.idling.CountingIdlingResource
 
 /**
- * Dummy EspressoIdlingResource class as we don't want this to be in the release build.
+ *  EspressoIdlingResource class : This is used for countingIdlingResource.
+ *  This is used to notifies espresso that there is a long running task in background.
  */
 object EspressoIdlingResource {
 

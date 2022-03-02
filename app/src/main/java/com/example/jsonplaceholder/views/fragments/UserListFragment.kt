@@ -58,9 +58,6 @@ class UserListFragment : Fragment() {
         } else {
             Log.e(LOGTAG, "UserEndpoint not created successfully.")
         }
-
-
-
         return rootView
     }
 

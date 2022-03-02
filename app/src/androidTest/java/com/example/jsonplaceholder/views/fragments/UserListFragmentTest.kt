@@ -1,6 +1,5 @@
 package com.example.jsonplaceholder.views.fragments
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
@@ -24,43 +23,38 @@ import org.junit.runner.RunWith
 class UserListFragmentTest {
 
     @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
     var scenario: ActivityScenarioRule<MainActivity> =
         ActivityScenarioRule(MainActivity::class.java)
 
 
+    //register idling resource so espresso knows that there is a long running task in background.
     @Before
     fun registerIdleResource() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
     }
 
+    //unregister idling resource once the test is done.
     @After
     fun unregisterIdleResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
-
     }
 
+    //Tests if the userList is being displayed or not.
     @Test
     fun userList_isDisplayed() {
-        //Thread.sleep(10000)
-
         val userListView = onView(withId(R.id.user_list))
         userListView.check(matches(isDisplayed()))
     }
 
+    //Checks if the click on userList item is working or not.
     @Test
     fun userListItem_isClickValid() {
-        // Thread.sleep(12000)
-
         val userListView = onView(withId(R.id.user_list))
-
         userListView.check(matches(isDisplayed()))
-
+        //TODO : Replace with ID. Remove hardcoded text
         onView((withText("Leanne Graham"))).check(matches(isDisplayed())).perform(click())
 
+        //TODO : Check for the next fragment; check with textview with id of the next screen.
     }
-
 
 }

@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 /**
- * Endpoints for api are defined here.
+ * Endpoints for user api are defined here.
  */
 interface UserEndpoints {
     @GET("users")

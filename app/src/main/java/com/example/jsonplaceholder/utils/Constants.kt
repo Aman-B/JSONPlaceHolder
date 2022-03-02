@@ -1,4 +1,5 @@
 package com.example.jsonplaceholder.utils
+
 /**
  * Global constants are defined here.
  */

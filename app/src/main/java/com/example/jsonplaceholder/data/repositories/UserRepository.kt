@@ -42,7 +42,6 @@ class UserRepository private constructor(private val userEndpoints: UserEndpoint
     }
 
 
-
     companion object {
         fun getInstance(userEndpoints: UserEndpoints): UserRepository {
             return UserRepository(userEndpoints)

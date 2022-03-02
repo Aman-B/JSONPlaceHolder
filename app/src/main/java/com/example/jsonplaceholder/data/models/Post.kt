@@ -1,6 +1,7 @@
 package com.example.jsonplaceholder.data.models
 
 import com.squareup.moshi.Json
+
 /**
  * Data class for defining the post model.
  */
