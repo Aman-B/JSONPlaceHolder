@@ -43,14 +43,15 @@ class UserListFragment : Fragment() {
 
         userEndpointInstance = RetrofitInstance.getInstance()?.create(UserEndpoints::class.java)
         if (userEndpointInstance != null) {
-            //Do not set the userList is again, if it is already set.
+            //Do not set the userList again, if it is already set.
             if (userList.isNullOrEmpty()) {
                 userListViewModel = UserListViewModel(userEndpointInstance!!)
                 userListViewModel.getUserList.observe(
                     viewLifecycleOwner,
-                    { userList -> updateUI(userList) })
+                    { userList -> initListInUI(userList) })
             } else {
-                Log.i(LOGTAG, "UserList is already set.")
+                initListInUI(userList)
+                Log.i(LOGTAG, "UserList is already fetched.")
                 progressBar.visibility = View.INVISIBLE
             }
 
@@ -58,8 +59,7 @@ class UserListFragment : Fragment() {
             Log.e(LOGTAG, "UserEndpoint not created successfully.")
         }
 
-        setAdapter()
-        setListViewItemClickListener()
+
 
         return rootView
     }
@@ -68,7 +68,9 @@ class UserListFragment : Fragment() {
      * Updates the UI with userList and hides progressbar
      * @param userList
      */
-    private fun updateUI(userList: List<User>) {
+    fun initListInUI(userList: List<User>) {
+        setAdapter()
+        setListViewItemClickListener()
         updateUserListView(userList)
         progressBar.visibility = View.INVISIBLE
     }
@@ -110,11 +112,15 @@ class UserListFragment : Fragment() {
      * Updates the userListView with list of posts that are returned by remote source.
      * @param userList
      */
-    fun updateUserListView(userList: List<User>) {
+    private fun updateUserListView(userList: List<User>) {
         this.userList = userList
-        Log.i(LOGTAG, " userList $userList")
-        userNameList.addAll(userList.map { user: User -> user.name }
-            .toTypedArray())
-        userListAdapter.notifyDataSetChanged()
+        if (userNameList.isEmpty()) {
+            userNameList.addAll(userList.map { user: User -> user.name }
+                .toTypedArray())
+            userListAdapter.notifyDataSetChanged()
+        } else {
+            Log.i(LOGTAG, "User name list is already set.")
+        }
+
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.jsonplaceholder.data.api.UserEndpoints
 import com.example.jsonplaceholder.data.models.User
+import com.example.jsonplaceholder.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Response
 
@@ -20,6 +21,7 @@ class UserRepository private constructor(private val userEndpoints: UserEndpoint
      */
     fun getUsersFromJSONPlaceHolder(): MutableLiveData<List<User>> {
         val userList: MutableLiveData<List<User>> = MutableLiveData()
+        EspressoIdlingResource.increment()
         userEndpoints.getUserList().enqueue(object :
             retrofit2.Callback<List<User>> {
             override fun onResponse(
@@ -28,11 +30,12 @@ class UserRepository private constructor(private val userEndpoints: UserEndpoint
             ) {
                 Log.i(LOGTAG, "response : " + response.body())
                 userList.value = response.body()
+                EspressoIdlingResource.decrement()
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 Log.i(LOGTAG, "retrofit call failed :" + t.localizedMessage)
-                t.localizedMessage
+                EspressoIdlingResource.decrement()
             }
         })
         return userList
