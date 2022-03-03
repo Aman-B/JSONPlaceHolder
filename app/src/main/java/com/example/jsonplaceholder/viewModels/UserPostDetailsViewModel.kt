@@ -21,5 +21,4 @@ class UserPostDetailsViewModel constructor(userID: Int, postEndpoints: PostEndpo
         postList = postRepository.getPostsByUserID(userID)
         emitSource(postList)
     }
-
 }

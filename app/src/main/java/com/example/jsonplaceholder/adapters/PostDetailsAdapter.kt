@@ -43,6 +43,10 @@ class PostDetailsAdapter(private var postDetailsList: ArrayList<Post>) :
         return postDetailsList.size
     }
 
+    /**
+     * Updates posts list in adapter
+     * @param postList: list of posts
+     */
     fun updatePostDetailsList(postList: List<Post>) {
         postDetailsList.clear()
         postDetailsList.addAll(postList)

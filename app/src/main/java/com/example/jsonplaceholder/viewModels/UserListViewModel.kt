@@ -12,11 +12,12 @@ import kotlinx.coroutines.Dispatchers
  * View model for UserListFragment
  */
 class UserListViewModel(userEndpointInstance: UserEndpoints) : ViewModel() {
+
     private val userRepository = UserRepository.getInstance(userEndpointInstance)
     var userList: MutableLiveData<List<User>> = MutableLiveData()
+
     val getUserList = liveData(Dispatchers.IO) {
         userList = userRepository.getUsersFromJSONPlaceHolder()
         emitSource(userList)
     }
-
 }

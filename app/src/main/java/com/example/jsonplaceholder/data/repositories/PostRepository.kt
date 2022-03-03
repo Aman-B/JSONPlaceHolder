@@ -8,6 +8,10 @@ import com.example.jsonplaceholder.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Response
 
+/**
+ * Post repository class which makes the retorfit calls using enqueue.
+ * @param : postEndpoint : the api endpoint/url for posts
+ */
 class PostRepository private constructor(private val postEndpoints: PostEndpoints) {
 
     private val LOGTAG: String = "PostRepository"

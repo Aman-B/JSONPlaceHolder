@@ -13,10 +13,16 @@ object EspressoIdlingResource {
     @JvmField
     val countingIdlingResource = CountingIdlingResource(RESOURCE)
 
+    /**
+     * Increment the idling resource counter
+     */
     fun increment() {
         countingIdlingResource.increment()
     }
 
+    /**
+     * Decrement the idling resource counter, if it is not idle.
+     */
     fun decrement() {
         if (!countingIdlingResource.isIdleNow) {
             countingIdlingResource.decrement()

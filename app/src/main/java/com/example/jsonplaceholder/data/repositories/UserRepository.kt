@@ -9,7 +9,9 @@ import retrofit2.Call
 import retrofit2.Response
 
 /**
- * A repository class which requests data from remote data source and returns results.
+ *
+ * User repository class which makes the retorfit calls using enqueue.
+ * @param : userEndpoints : the api endpoint/url for users
  */
 class UserRepository private constructor(private val userEndpoints: UserEndpoints) {
     private val LOGTAG: String = "UserRepository"

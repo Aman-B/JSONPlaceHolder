@@ -5,6 +5,7 @@ import java.io.Serializable
 
 /**
  * Data class for defining the user model.
+ * Declared serializable because it needs to be passed to other fragment.
  */
 data class User(
     @field:Json(name = "id") val id: Int,

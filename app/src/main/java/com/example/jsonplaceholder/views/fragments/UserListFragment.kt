@@ -43,7 +43,7 @@ class UserListFragment : Fragment() {
 
         userEndpointInstance = RetrofitInstance.getInstance()?.create(UserEndpoints::class.java)
         if (userEndpointInstance != null) {
-            //Do not set the userList again, if it is already set.
+            //To not set the userList again, if it is already set.
             if (userList.isNullOrEmpty()) {
                 userListViewModel = UserListViewModel(userEndpointInstance!!)
                 userListViewModel.getUserList.observe(
@@ -65,7 +65,7 @@ class UserListFragment : Fragment() {
      * Updates the UI with userList and hides progressbar
      * @param userList
      */
-    fun initListInUI(userList: List<User>) {
+    private fun initListInUI(userList: List<User>) {
         setAdapter()
         setListViewItemClickListener()
         updateUserListView(userList)
