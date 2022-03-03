@@ -34,7 +34,7 @@ class UserRepository private constructor(private val userEndpoints: UserEndpoint
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                Log.i(LOGTAG, "retrofit call failed :" + t.localizedMessage)
+                Log.e(LOGTAG, "Retrofit call failed :" + t.localizedMessage)
                 EspressoIdlingResource.decrement()
             }
         })

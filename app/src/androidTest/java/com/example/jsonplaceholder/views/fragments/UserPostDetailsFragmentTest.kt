@@ -26,7 +26,6 @@ class UserPostDetailsFragmentTest {
     var scenario: ActivityScenarioRule<MainActivity> =
         ActivityScenarioRule(MainActivity::class.java)
 
-    //todo : replace with id
     var userName = "Ervin Howell"
 
     //Register idling resource so espresso knows that there is a long running task in background.
@@ -66,8 +65,4 @@ class UserPostDetailsFragmentTest {
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 
     }
-
-    //todo : check the validity of data
-
-
 }

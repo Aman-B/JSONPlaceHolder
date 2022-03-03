@@ -17,7 +17,6 @@ class PostRepository private constructor(private val postEndpoints: PostEndpoint
      * @param userID : userId of the User
      * @return postList : List of user's posts with post details received from remote source.
      */
-    //TODO : generate test cases for repository
     fun getPostsByUserID(userID: Int): MutableLiveData<List<Post>> {
         val postList: MutableLiveData<List<Post>> = MutableLiveData()
         EspressoIdlingResource.increment()
@@ -33,7 +32,7 @@ class PostRepository private constructor(private val postEndpoints: PostEndpoint
             }
 
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                Log.i(LOGTAG, "retrofit call failed :" + t.localizedMessage)
+                Log.e(LOGTAG, "Retrofit call failed :" + t.localizedMessage)
                 EspressoIdlingResource.decrement()
             }
         })
